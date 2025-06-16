@@ -1,0 +1,20 @@
+[
+    {
+        "id":1,
+        "tipo":"perdida",
+        "descripcion":"Se perdio perro simil Salchicha en Saavedra",
+        "usuariMail":"mascotaperdida@gmail.com",
+        "ubicacion":{"lat":-30.5,"lng":-58.5},
+        "foto":"img/luna,jpg",
+        "nombre":"luna"
+    },
+    {
+        "id":2,
+        "tipo":"encontrada",
+        "descripcion":"Se encontro perro simil Salchicha en Saavedra",
+        "usuariMail":"mascotaencontrada@gmail.com",
+        "ubicacion":{"lat":-30.8,"lng":-58.6},
+        "foto":"img/mascotaencontrada,jpg",
+        "nombre":""
+    }
+]

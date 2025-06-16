@@ -1,0 +1,12 @@
+[
+    {
+        "mail":"mascotaperdida@gmail.com",
+        "password":"prueba123",
+        "rol":"perdida"
+    },
+    {
+        "mail":"mascotaencontrada@gmail.com",
+        "password":"prueba123",
+        "rol":"encontrada"
+    }
+]
