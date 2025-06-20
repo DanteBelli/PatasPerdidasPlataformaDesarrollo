@@ -24,6 +24,9 @@ export default function NavBar(){
                         <li className="nav-item">
                             <Link className="nav-link" to="/nueva-mascota">Nueva Mascota</Link>
                         </li>
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/cerrar-caso">Cerrar Caso</Link>
+                        </li>
                     </ul>
                     <ul className="navbar-nav">
                         <li className="nav-item dropdown">

@@ -14,7 +14,7 @@ export default function App(){
           <Route path="/" element={<Login />} />
           <Route path="/mapa" element={<Mapa />} />
           <Route path="/nueva-mascota" element={<NuevaMascota />} />
-          <Route path="/cerrar-caso/:id" element={<CerrarCaso />} />
+          <Route path="/cerrar-caso" element={<CerrarCaso />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
