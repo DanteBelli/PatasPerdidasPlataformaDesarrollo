@@ -9,7 +9,7 @@ export default function NavBar(){
         navigate("/");
     };
     return(
-        <nav className="navbar navbar--expand-lg navbar-dark bg-dark">
+        <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
             <div className="container">
                 <Link className="navbar-brand" to="/">Patitas Perdidas</Link>
                 
@@ -19,13 +19,12 @@ export default function NavBar(){
                 <div className="collapse navbar-collapse" id="navbarNav">
                     <ul className="navbar-nav me-auto">
                         <li className="nav-item">
-                            <Link className="nav-link" to="/Mapa">Mapa</Link>
+                            <Link className="nav-link" to="/mapa">Mapa</Link>
                         </li>
                         <li className="nav-item">
                             <Link className="nav-link" to="/nueva-mascota">Nueva Mascota</Link>
                         </li>
                     </ul>
-
                     <ul className="navbar-nav">
                         <li className="nav-item dropdown">
                             <button className="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown">
