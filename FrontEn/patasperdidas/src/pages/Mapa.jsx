@@ -48,7 +48,7 @@ export default function Mapa(){
                 {listaDeMascotas.map((mascota) => (
                     <div key={mascota.id} className="col-md-4 mb-3">
                         <div className={`card border-${mascota.tipo === "perdida" ? "danger" : "primary"}`}>
-                            <img src={mascota.foto} alt="imgMascota" className="card-img-top"/>
+                            <img src={mascota.foto}alt="imgMascota"className="card-img-top img-fluid"style={{ height: "200px", objectFit: "cover" }}/>
                             <div className="card-body">
                                 <h5 className="card-title">{mascota.nombre || "Sin nombre"}</h5>
                                 <p className="card-text">{mascota.descripcion}</p>
