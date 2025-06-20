@@ -37,7 +37,7 @@ export default function NavBar(){
                                     </li>
                                 ):(
                                     <li>
-                                        <Link className="dropdown-item" to="/login">Iniciar Sesion</Link>
+                                        <Link className="dropdown-item" to="/">Iniciar Sesion</Link>
                                     </li>
                                 )}
                             </ul>
