@@ -8,7 +8,6 @@ export default function NuevaMascota(){
     const [tipo,setTipo] = useState("perdida")
     const [descripcion , setDescripcion] = useState("");
     const navigate = useNavigate();
-
     const handleSubmit = () => {
         const nueva = {
             id: Date.now(),
@@ -24,7 +23,6 @@ export default function NuevaMascota(){
         localStorage.setItem("mascotas", JSON.stringify(mascotas));
         navigate("/mapa");
     };
-
     return (
         <div className="container mt-4">
             <h3>Nueva Mascota</h3>
@@ -34,7 +32,7 @@ export default function NuevaMascota(){
             </div>
             <div className="mb-3">
                 <label  className="form-label"> Tipo</label>
-                <select  className="form-select" value={tipo} onChange={e =>setNombre(e.target.value)}>
+                <select className="form-select" value={tipo} onChange={e => setTipo(e.target.value)}>
                     <option value="perdida">Perdida</option>
                     <option value="encontrada">Encontrada</option>
                 </select>
