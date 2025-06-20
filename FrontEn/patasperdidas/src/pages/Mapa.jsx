@@ -26,7 +26,7 @@ export default function Mapa(){
         <div className="container mt-4">
             <h3>Mascotas</h3>
             <button className="btn btn-success mb-3" onClick={() => navigate("/nueva-mascota")}>
-                Agregar Nueva Masc1ota
+                Agregar Nueva Mascota
             </button>
             {isLoaded ? (
                 <GoogleMap mapContainerStyle={containerStyle} center={centro} zoom={10}>
