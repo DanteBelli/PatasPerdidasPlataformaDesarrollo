@@ -31,10 +31,13 @@ export default function Mapa(){
             {isLoaded ? (
                 <GoogleMap mapContainerStyle={containerStyle} center={centro} zoom={10}>
                     {listaDeMascotas.map((mascota) => (
-                        <Marker key={mascota.id} position={mascota.ubicacion} icon={{url: mascota.tipo === "perdida"
+                        <Marker
+                            key={mascota.id}
+                            position={mascota.ubicacion}
+                            icon={{url: mascota.tipo === "perdida"
                             ? "http://maps.google.com/mapfiles/ms/icons/red-dot.png"
                             : "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
-                        }}
+                            }}
                         />
                     ))}
                 </GoogleMap>
