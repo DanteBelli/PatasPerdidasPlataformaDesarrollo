@@ -6,6 +6,11 @@ export default function CerrarCaso(){
     const [seleccion , setSeleccion] = useState([]);
     const navigate = useNavigate();
     useEffect(() =>{
+        const usuario = JSON.parse(localStorage.getItem("usuario"));
+        if(!usuario || usuario.rol !== "admin"){
+            navigate("/mapa");
+            return;
+        }
         const datos = JSON.parse(localStorage.getItem("mascotas"))  || [];
         setMascotas(datos);
     },[]);
