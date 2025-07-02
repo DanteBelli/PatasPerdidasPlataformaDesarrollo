@@ -27,6 +27,10 @@ Usuario2: mascotaencontrada@gmail.com
 Contraseña: prueba123
 Rol: Usuario con mascota encontrada ya cargada.
 
+Usuario3; administrador@gmail.com
+Contraseña: prueba123
+Rol: Usuario administrador , habilitado para cerrar casos.
+
 Instrucciones de uso
     Descargar el repositorio , a la computadora local usando git pull y la url.
     Luego en la terminal usar el comando npm install.
