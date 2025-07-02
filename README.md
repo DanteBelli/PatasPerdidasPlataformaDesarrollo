@@ -16,7 +16,7 @@ Detalle de pantallas:
 Pantalla 1: Será la pantalla de inicio de sesión (Login), con la opción de crear un usuario mediante correo electrónico o ingresar con Gmail/Facebook. 
 Pantalla 2: Será la pantalla principal, donde se mostrará un mapa con los pines de mascotas cargadas. Al hacer clic sobre un pin, se abrirá una ventana con la información de la mascota. En esta pantalla también habrá una opción para agregar una nueva mascota.
 Pantalla 3: Pantalla para la carga de mascotas, donde se solicitará especificar si la mascota fue perdida o encontrada, la ubicación del suceso, una foto y demás información relevante. 
-Pantalla 4: En caso de que se confirme un match y la mascota regrese con sus dueños, desde esta pantalla se podrá cerrar el caso. Al hacerlo, se eliminarán automáticamente del mapa ambos pines, tanto el de pérdida como el de hallazgo.
+Pantalla 4: En caso de que se confirme un match y la mascota regrese con sus dueños, desde esta pantalla se podrá cerrar el caso. Al hacerlo, se eliminarán automáticamente del mapa ambos pines, tanto el de pérdida como el de hallazgo.Esta pantalla solo tendran acceso los usuarios con rol de Administrador
 
 Los usuarios Predeterminados para probar son los siguientes:
 Usuario:  mascotaperdida@gmail.com
