@@ -8,5 +8,10 @@
         "mail":"mascotaencontrada@gmail.com",
         "password":"prueba123",
         "rol":"encontrada"
+    },
+    {
+        "mail":"administrador@gmail.com",
+        "password":"prueba123",
+        "rol":"admin"
     }
 ]
