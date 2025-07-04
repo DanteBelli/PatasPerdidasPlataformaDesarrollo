@@ -21,14 +21,14 @@ export default function Login(){
             (u) => u.mail === email && u.password === password
         );
 
-        console.log("Resultado de búsqueda:", user);
+        console.log("Resultado", user);
 
         if(user){
             setUsuario(user);
             localStorage.setItem("usuario",JSON.stringify(user));
             navigate("/mapa");
         }else {
-            alert("Usuario Incorrect");
+            alert("Usuario mal cargasdo");
         }
     };
 
