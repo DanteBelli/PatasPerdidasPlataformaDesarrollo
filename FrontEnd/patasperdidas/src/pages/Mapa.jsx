@@ -2,22 +2,34 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import mascotas from "../data/mascotas.json";
-import { GoogleMap , Marker , useJsApiLoader } from "@react-google-maps/api";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import L from "leaflet";
+import "leaflet/dist/leaflet.css";
 
-const centro = { lat:-34.6037 , lng:-58.3816}
+delete L.Icon.Default.prototype._getIconUrl;
+L.Icon.Default.mergeOptions({
+    iconRetinaUrl:"https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
+    iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
+    shadowUrl:"https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+});
 
-const containerStyle = {
-    width: "100%",
-    height:"400px",
-};
-
+const centro = { lat: -34.6037, lng: -58.3816 };
 export default function Mapa(){
+    const iconoPerdida = new L.Icon({
+        iconUrl: "https://maps.google.com/mapfiles/ms/icons/red-dot.png",
+        iconSize: [32, 32],
+        iconAnchor: [16, 32],
+        popupAnchor: [0, -32],
+    });
+    const iconoEncontrada = new L.Icon({
+        iconUrl: "https://maps.google.com/mapfiles/ms/icons/blue-dot.png",
+        iconSize: [32, 32],
+        iconAnchor: [16, 32],
+        popupAnchor: [0, -32],
+    });
     const {usuario} = useAuth();
     const [listaDeMascotas, setListaDeMascotas] = useState([]);
     const navigate = useNavigate();
-    const {isLoaded} = useJsApiLoader({
-        googleMapsApiKey:"AIzaSyBWO8J564_rA-qiIqLITKedmqOhRej9e_A",
-    });
     useEffect(() => {
         const guardadas = JSON.parse(localStorage.getItem("mascotas")) || [];
         setListaDeMascotas([...mascotas, ...guardadas]);
@@ -28,17 +40,21 @@ export default function Mapa(){
             <button className="btn btn-success mb-3" onClick={() => navigate("/nueva-mascota")}>
                 Agregar Nueva Mascota
             </button>
-            {isLoaded ? (
-                <GoogleMap mapContainerStyle={containerStyle} center={centro} zoom={10}>
-                    {listaDeMascotas.map((mascota) => (
-                        <Marker key={mascota.id} position={mascota.ubicacion} icon={{url: mascota.tipo === "perdida"? "http://maps.google.com/mapfiles/ms/icons/red-dot.png": "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
-                    }}
-                        />
-                    ))}
-                </GoogleMap>
-            ):(
-                <p>Cargando</p>
-            )}
+            <div style={{ height: "400px", width: "100%", marginBottom: "20px" }}>
+            <MapContainer center={[centro.lat, centro.lng]}zoom={13}style={{ height: "100%", width: "100%" }}>
+                <TileLayer attribution='&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a>'
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                />
+            {listaDeMascotas.filter(m => typeof m.lat === "number" && typeof m.lng === "number").map((mascota) => (
+                <Marker key={mascota.id} position={[mascota.lat, mascota.lng]}icon={mascota.tipo === "perdida" ? iconoPerdida : iconoEncontrada}>
+                    <Popup>
+                        <strong>{mascota.nombre || "Sin nombre"}</strong><br />
+                        {mascota.tipo === "perdida" ? "🐾 Perdida" : "Encontrado"}
+                    </Popup>
+                </Marker>
+            ))}
+            </MapContainer>
+      </div>
             <div className="row mt-4">
                 {listaDeMascotas.map((mascota) => (
                     <div key={mascota.id} className="col-md-4 mb-3">
