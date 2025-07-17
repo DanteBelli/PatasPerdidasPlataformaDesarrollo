@@ -6,7 +6,6 @@ export default function CerrarCaso() {
     const [seleccion, setSeleccion] = useState([]);
     const navigate = useNavigate();
     useEffect(() => {
-    // Traer mascotas desde API sin validar usuario
     const fetchMascotas = async () => {
         try {
             const response = await fetch("http://localhost:5000/api/mascotas");
@@ -17,7 +16,6 @@ export default function CerrarCaso() {
             alert("No se pudieron cargar las mascotas");
         }
         };
-
     fetchMascotas();
 }, []);
     const toggleSeleccion = (id) => {
@@ -51,7 +49,6 @@ export default function CerrarCaso() {
     return (
         <div className="container mt-4">
         <h3>Seleccione 2 mascotas que coincidieron</h3>
-        <p>Desaparecerán del mapa una vez ejecutada la acción</p>
         <div className="row">
             {mascotas.map((m) => (
             <div key={m.id} className={`col-md-4 mb-3 ${seleccion.includes(m.id) ? "border border-success" : ""}`}>
@@ -77,7 +74,7 @@ export default function CerrarCaso() {
             <button className="btn btn-secondary" onClick={() => navigate("/mapa")}>
             Cancelar
             </button>
-            {seleccion.length !== 2 && <p className="text-danger mt-2">Seleccione 2 mascotas por favor</p>}
+            {seleccion.length !== 2 && <p className="text-danger mt-2">Seleccione 2 </p>}
         </div>
     </div>
     );
