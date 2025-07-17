@@ -1,19 +1,16 @@
 import { useState } from "react";
 import {useNavigate} from "react-router-dom";
-import usuarios from "../data/usuarios"
+/*Se usa la API ahora import usuarios from "../data/usuarios"*/
 import { useAuth } from "../context/AuthContext";
-
-
 
 export default function Login(){
     const [email,setEmail] = useState("");
     const [password , setPassword] = useState("");
     const {setUsuario} = useAuth();
-
     const navigate = useNavigate();
 
-    const handleLogin= () => {
-        console.log("Email ingresado:", email);
+    const handleLogin= async () => {
+    /* Se usa la Api  console.log("Email ingresado:", email);
         console.log("Password ingresado:", password);
         console.log("Usuarios disponibles:", usuarios);
 
@@ -31,7 +28,26 @@ export default function Login(){
             alert("Usuario mal cargasdo");
         }
     };
-
+*/
+        try{
+            const response = await fetch("http://localhost:5000/api/auth/login",{
+                method:"POST",
+                headers:{"Content-Type":"application/json"},
+                body:JSON.stringify({email,password})
+            });
+            const data = await response.json();
+            if(response.ok){
+                setUsuario(data.usuario);
+                localStorage.setItem("usuario",JSON.stringify(data.usuario));
+                navigate("/mapa");
+            }else{
+                alert(data.error  || "Credenciales incorrectas");
+            }
+        }catch(error){
+            console.error("Error al hacer el log",error);
+            alert("Ocurrio un error al intentar loguearse");
+        }
+    };
     return(
         <div className="container mt-5">
             <h2>Iniciar Sesion</h2>
