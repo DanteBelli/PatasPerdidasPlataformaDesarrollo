@@ -1,61 +1,84 @@
-import { useParams , useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-export default function CerrarCaso(){
-    const [mascotas,setMascotas] = useState([]);
-    const [seleccion , setSeleccion] = useState([]);
+export default function CerrarCaso() {
+    const [mascotas, setMascotas] = useState([]);
+    const [seleccion, setSeleccion] = useState([]);
     const navigate = useNavigate();
-    useEffect(() =>{
-        const usuario = JSON.parse(localStorage.getItem("usuario"));
-        if(!usuario || usuario.rol !== "admin"){
-            navigate("/mapa");
-            return;
+    useEffect(() => {
+    // Traer mascotas desde API sin validar usuario
+    const fetchMascotas = async () => {
+        try {
+            const response = await fetch("http://localhost:5000/api/mascotas");
+            if (!response.ok) throw new Error("Error al cargar mascotas");
+                const data = await response.json();
+                setMascotas(data);
+            } catch (error) {
+            alert("No se pudieron cargar las mascotas");
         }
-        const datos = JSON.parse(localStorage.getItem("mascotas"))  || [];
-        setMascotas(datos);
-    },[]);
-    const toggleSeleccion = (id)=>{
-        if(seleccion.includes(id)){
+        };
+
+    fetchMascotas();
+}, []);
+    const toggleSeleccion = (id) => {
+        if (seleccion.includes(id)) {
             setSeleccion(seleccion.filter((sid) => sid !== id));
-        }else if (seleccion.length < 2){
+        } else if (seleccion.length < 2) {
             setSeleccion([...seleccion, id]);
         }
     };
-    const handleCerrar = ()=>{
-        const nuevaMascota = mascotas.filter(m => !seleccion.includes(m.id));
-        localStorage.setItem("mascotas" , JSON.stringify(nuevaMascota));
+    const handleCerrar = async () => {
+        try {
+            const response = await fetch("http://localhost:5000/api/mascotas/cerrar-caso", {
+                method: "POST", // o DELETE según tu API
+                headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id1: seleccion[0], id2: seleccion[1] }),
+        });
+        if (!response.ok) {
+            const errorData = await response.json();
+            alert("Error al cerrar caso: " + (errorData.message || ""));
+            return;
+        }
+        alert("Caso cerrado correctamente");
+        setSeleccion([]);
+        const refreshed = await (await fetch("http://localhost:5000/api/mascotas")).json();
+        setMascotas(refreshed);
         navigate("/mapa");
+        } catch (error) {
+        alert("Error al comunicarse con el servidor");
+        }
     };
-    return(
+    return (
         <div className="container mt-4">
-            <h3>Seleccione 2 mascotas que coincidieron</h3>
-            <p>Desapareceran del mapa una vez ejecutada la accion</p>
-            <div className="row">
-                {mascotas.map((m) => (
-                    <div key={m.id} className={`col-md-4 mb-3 ${seleccion.includes(m.id) ? "border border-success" : ""}`}>
-                        <div className="card p-2">
-                            <h5>{m.nombre}</h5>
-                            <p><strong>Tipo:</strong>{m.tipo}</p>
-                            <p><strong>Descrip: </strong>{m.descripcion}</p>
-                            <button className={`btn btn-sm ${seleccion.includes(m.id) ? "btn-danger" : "btn-outline-primary"}`}
-                                onClick={() => toggleSeleccion(m.id)}>
-                                    {seleccion.includes(m.id) ? "Quitar" : "Seleccionar"}
-                                </button>
-                        </div>    
-                    </div>
-                ))}
-            </div>
-            <div className="mt-4">
-                <button className="btn btn-success me-2" onClick={handleCerrar} disabled={seleccion.length !== 2}>
-                    Cerrar
+        <h3>Seleccione 2 mascotas que coincidieron</h3>
+        <p>Desaparecerán del mapa una vez ejecutada la acción</p>
+        <div className="row">
+            {mascotas.map((m) => (
+            <div key={m.id} className={`col-md-4 mb-3 ${seleccion.includes(m.id) ? "border border-success" : ""}`}>
+            <div className="card p-2">
+                <h5>{m.nombre}</h5>
+                <p>
+                    <strong>Tipo:</strong> {m.tipo}
+                </p>
+                <p>
+                    <strong>Descrip: </strong> {m.descripcion}
+                </p>
+                <button className={`btn btn-sm ${seleccion.includes(m.id) ? "btn-danger" : "btn-outline-primary"}`} onClick={() => toggleSeleccion(m.id)}>
+                    {seleccion.includes(m.id) ? "Quitar" : "Seleccionar"}
                 </button>
-                <button className="btn btn-secondary" onClick={() =>navigate("/mapa")}>
-                    Cancelar
-                </button>
-                {seleccion.length !== 2 && (
-                    <p className="text-danger mt-2">Seleccione 2 mascotas porfavor</p>
-                )}
             </div>
+            </div>
+            ))}
         </div>
+        <div className="mt-4">
+            <button className="btn btn-success me-2" onClick={handleCerrar} disabled={seleccion.length !== 2}>
+                Cerrar
+            </button>
+            <button className="btn btn-secondary" onClick={() => navigate("/mapa")}>
+            Cancelar
+            </button>
+            {seleccion.length !== 2 && <p className="text-danger mt-2">Seleccione 2 mascotas por favor</p>}
+        </div>
+    </div>
     );
 }
