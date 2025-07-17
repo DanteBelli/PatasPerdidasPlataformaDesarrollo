@@ -4,7 +4,7 @@ import {useNavigate} from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 export default function Login(){
-    const [email,setEmail] = useState("");
+    const [mail,setEmail] = useState("");
     const [password , setPassword] = useState("");
     const {setUsuario} = useAuth();
     const navigate = useNavigate();
@@ -33,7 +33,7 @@ export default function Login(){
             const response = await fetch("http://localhost:5000/api/auth/login",{
                 method:"POST",
                 headers:{"Content-Type":"application/json"},
-                body:JSON.stringify({email,password})
+                body:JSON.stringify({mail,password})
             });
             const data = await response.json();
             if(response.ok){
@@ -53,7 +53,7 @@ export default function Login(){
             <h2>Iniciar Sesion</h2>
             <div className="mb-3">
                 <label className="form-label">Mail</label>
-                <input type="email" className="form-control" value={email} onChange={e => setEmail(e.target.value)} />
+                <input type="email" className="form-control" value={mail} onChange={e => setEmail(e.target.value)} />
             </div>
             <div className="mb-3">
                 <label  className="form-label">Contra</label>
