@@ -27,43 +27,67 @@ export default function NuevaMascota(){
     const [descripcion , setDescripcion] = useState("");
     const [latLng, setLatLng] = useState({ lat: -34.6, lng: -58.4 });
     const navigate = useNavigate();
-    const handleSubmit = () => {
-        const nueva = {
-            id: Date.now(),
-            nombre,
-            tipo,
-            descripcion,
-            usuarioEmail: usuario.email,
-            ubicacion: { lat: latLng.lat, lng: latLng.lng },
-            lat: latLng.lat,
-            lng: latLng.lng,
-            foto: "/img/default.jpg"
-        };
+    const handleSubmit = async() => {
+    /* se cambia para consumo de api   const nueva = {
         const mascotas = JSON.parse(localStorage.getItem("mascotas")) || [];
         mascotas.push(nueva);
         localStorage.setItem("mascotas", JSON.stringify(mascotas));
         navigate("/mapa");
+    };*/
+    if(!descripcion.trim()){
+        alert("Ingrese descripcion");
+        return;
+    }
+    const nueva = {
+            nombre,
+            tipo,
+            descripcion,
+            usuariMail: "mascotaperdida@gmail.com",
+            lat: latLng.lat,
+            lng: latLng.lng,
+            foto: "/img/default.jpg"
     };
+    console.log("Datos a enviar:", nueva);
+
+    try{
+        const response = await fetch("http://localhost:5000/api/mascotas", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body:JSON.stringify(nueva),
+    });
+    if(!response.ok){
+        const errorData = await response.json();
+        alert("Error en el guardado");
+        return;
+    }
+    alert("Se guardo bien");
+    navigate("/mapa");
+    }catch(error){
+        alert("Ocurrio un error",error.message);
+    }
+};
     return (
         <div className="container mt-4">
             <h3>Nueva Mascota</h3>
             <div className="mb-3">
                 <label  className="form-label">Nombre</label>
-                <input className="form-control" value={nombre} onChange={e =>setNombre(e.target.value)}/>
+                <input className="form-control" value={nombre} onChange={(e) =>setNombre(e.target.value)}/>
             </div>
             <div className="mb-3">
                 <label  className="form-label"> Tipo</label>
-                <select className="form-select" value={tipo} onChange={e => setTipo(e.target.value)}>
+                <select className="form-select" value={tipo} onChange={(e) => setTipo(e.target.value)}>
                     <option value="perdida">Perdida</option>
                     <option value="encontrada">Encontrada</option>
                 </select>
             </div>
             <div className="mb-3">
                 <label  className="form-label">Descripcion</label>
-                <textarea  className="form-control" value={descripcion} onChange={e =>setDescripcion(e.target.value)}>   
+                <textarea  className="form-control" value={descripcion} onChange={e =>setDescripcion((e).target.value)}>   
                 </textarea>
             </div>
-             <div className="mb-3">
+            <div className="mb-3">
                 <label className="form-label">Ubicación (hacé clic en el mapa)</label>
                 <MapContainer center={[latLng.lat, latLng.lng]}zoom={13}style={{ height: "300px", width: "100%" }}>
                     <TileLayer attribution='&copy; OpenStreetMap contributors'url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"/>
