@@ -33,7 +33,7 @@ Rol: Usuario administrador , habilitado para cerrar casos.
 
 Instrucciones de uso
     Descargar el repositorio , a la computadora local usando git pull y la url.
-    Luego en la terminal usar el comando npm install , y npm install leaflet react-leaflet(este mismo es una libreria para poder usar el OpenStreetMap)
+    Luego en la terminal usar el comando npm install , y npm install leaflet react-leaflet(este mismo es una libreria para poder usar el OpenStreetMap), luego npm start para ejecutar el proyecto.
     Por  utlimo en la misma terminal escribir npm start , y se abrira una ventana del explorador con la pagina web.
 
 Link de Entrega: https://github.com/DanteBelli/PatasPerdidasPlataformaDesarrollo.git
