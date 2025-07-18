@@ -1,23 +1,35 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import {useAuth} from "../context/AuthContext";
 
 export default function CerrarCaso() {
     const [mascotas, setMascotas] = useState([]);
     const [seleccion, setSeleccion] = useState([]);
+    const {usuario}= useAuth();
     const navigate = useNavigate();
     useEffect(() => {
-    const fetchMascotas = async () => {
-        try {
-            const response = await fetch("http://localhost:5000/api/mascotas");
-            if (!response.ok) throw new Error("Error al cargar mascotas");
+        const controlPermisos = async() =>{
+            try{
+                const responseUser = await fetch(`http://localhost:5000/api/auth/usuario/${usuario.email}`);
+                if (!responseUser.ok)throw new Error("Error al consultar");
+                const dataUser = await responseUser.json();
+                if(dataUser.rol !== "admin"){
+                    alert("Acceso incorrecto");
+                    navigate("/mapa");
+                    return;
+                }
+                 const response = await fetch("http://localhost:5000/api/mascotas");
+                if (!response.ok) throw new Error("Error al cargar mascotas");
                 const data = await response.json();
                 setMascotas(data);
-            } catch (error) {
-            alert("No se pudieron cargar las mascotas");
-        }
+            }catch(error){
+                console.error(error);
+                alert("Error al verificar");
+                navigate("/mapa");
+            }
         };
-    fetchMascotas();
-}, []);
+        controlPermisos();
+    },[usuario,navigate]);
     const toggleSeleccion = (id) => {
         if (seleccion.includes(id)) {
             setSeleccion(seleccion.filter((sid) => sid !== id));

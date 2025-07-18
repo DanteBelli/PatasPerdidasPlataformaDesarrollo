@@ -2,12 +2,12 @@
     {
         "mail":"mascotaperdida@gmail.com",
         "password":"prueba123",
-        "rol":"perdida"
+        "rol":"usuario"
     },
     {
         "mail":"mascotaencontrada@gmail.com",
         "password":"prueba123",
-        "rol":"encontrada"
+        "rol":"usuario"
     },
     {
         "mail":"administrador@gmail.com",

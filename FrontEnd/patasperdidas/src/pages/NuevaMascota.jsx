@@ -42,7 +42,7 @@ export default function NuevaMascota(){
             nombre,
             tipo,
             descripcion,
-            usuariMail: "mascotaperdida@gmail.com",
+            usuariMail: usuario.email,
             lat: latLng.lat,
             lng: latLng.lng,
             foto: "/img/default.jpg"
